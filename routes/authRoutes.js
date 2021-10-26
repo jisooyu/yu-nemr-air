@@ -17,5 +17,13 @@ module.exports = app => {
   app.get('/api/current_user', (req, res)=>{
     res.send(req.user)
   })
+  // serializeUser가 보낸 req.session.passport
+  app.get('/api/session/passport', (req, res)=> {
+    res.send(req.session.passport)
+  })
+  // cookie-session이 de-encrypt하여 넘겨 준 req.session
+  app.get('/api/session', (req, res)=>{
+    res.send(req.session)
+  })
 
 };
