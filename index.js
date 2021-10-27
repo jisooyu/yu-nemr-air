@@ -4,9 +4,9 @@ const cookieSession = require('cookie-session')
 const passport = require('passport')
 
 const keys = require('./config/keys')
-const { cookieKey } = require('./config/keys')
 
 require('./models/User')
+require('./models/Air')
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI)
@@ -20,11 +20,13 @@ app.use(
     })
 )
 
+app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
 
 //  IIFE
 require('./routes/authRoutes')(app)
+require('./routes/airRoutes')(app)
 
 if(process.env.NODE_ENV="production"){
     app.use(express.static('client/build'))
