@@ -1,58 +1,63 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import axios from 'axios'
+import { set } from 'mongoose';
+
 
 const Search = () => {
     const [location, setLocation] = useState("")
-    const [dataStatus, setDataStatus] = useState("")
-
-    const onLocationChange = ( e ) => {
+    const[dataStatus, setDataStatus] = useState("")
+    
+    const onLocationChange = (e) => {
         setDataStatus("")
-        setLocation( e.target.value)
+        setLocation(e.target.value)
     }
 
     const onUpdateSubmit = async (e) => {
-        e.preventDefault();
-        setDataStatus("...............Loading")
+        e.preventDefault()
+        setDataStatus("........ Loading")
         try {
-            const res = await axios.post('/airdata/update', { station: location } )
-            if (res){
-                setDataStatus("Data updated! Click Update Button.")
+            const res = await axios.post('/airdata/update', { station: location })
+            if (res) {
+                setDataStatus("Data updated! Click Update Button")
                 return res
             }
-        } catch ( err ) {
+        } catch (err) {
             setDataStatus("No data to update!")
             return err
         }
     }
 
     const onAddClick = async () => {
-        setDataStatus("Loading......")
+        setDataStatus("Loading ........... ")
     }
-
+    
     return (
         <div className="formLayout">
             <Form onSubmit={onUpdateSubmit}>
                 <FormGroup>
-                <Label >Enter the location:{location}</Label>
-                <Input onChange={onLocationChange} />
-                <br></br>
-                <p>UpdateDB Status:
-                    <span id="renderRed">{dataStatus}</span>
-                </p>
+                    <Label>Enter the location: {location}</Label>
+                    <Input onChange={onLocationChange} />
+                    <br></br>
+                    <p>
+                        UpdataDB Status:
+                        <span id="renderRed">{dataStatus}</span>
+                    </p>
                 </FormGroup>
-                {
-                    <Link to={'/display'}>
-                        <div className="formSub">
-                            <Button color="danger" onClick={onAddClick} >Update Data</Button>{' '}
-                        </div>
-                    </Link>
-                }
+                    {
+                        <Link to={'/display'}>
+                            <div className="formSub">
+                                <Button color="danger" onClick={onAddClick}>
+                                Update Data
+                                </Button>
+                            </div>
+                        </Link>
+                    }
             </Form>
         </div>
-    ) 
+    )
 }
 
 export default  Search;
