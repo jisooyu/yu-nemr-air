@@ -7,8 +7,8 @@ import axios from 'axios'
 import { AirDataContext } from '../contexts/AirDataContext';
 
 const Display = () => {
+   
     const [airData, setAirData] = useContext(AirDataContext)
-
     useEffect( ()=> {
         async function fetchData (){
             const res = await axios.get('/airdata/display')
@@ -38,6 +38,5 @@ const Display = () => {
     }
     return <div> Loading... </div>
 }
-
 
 export default Display;
